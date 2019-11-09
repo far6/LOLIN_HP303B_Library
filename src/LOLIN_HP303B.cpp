@@ -181,7 +181,7 @@ int16_t LOLIN_HP303B::standby(void)
  * 				-2 if the object initialization failed
  * 				-1 on other fail
  */
-int16_t LOLIN_HP303B::measureTempOnce(int32_t &result)
+int16_t LOLIN_HP303B::measureTempOnce(double &result)
 {
 	return measureTempOnce(result, m_tempOsr);
 }
@@ -202,7 +202,7 @@ int16_t LOLIN_HP303B::measureTempOnce(int32_t &result)
  * 						-2 if the object initialization failed
  * 						-1 on other fail
  */
-int16_t LOLIN_HP303B::measureTempOnce(int32_t &result, uint8_t oversamplingRate)
+int16_t LOLIN_HP303B::measureTempOnce(double &result, uint8_t oversamplingRate)
 {
 	//Start measurement
 	int16_t ret = startMeasureTempOnce(oversamplingRate);
@@ -286,7 +286,7 @@ int16_t LOLIN_HP303B::startMeasureTempOnce(uint8_t oversamplingRate)
  * 				-2 if the object initialization failed
  * 				-1 on other fail
  */
-int16_t LOLIN_HP303B::measurePressureOnce(int32_t &result)
+int16_t LOLIN_HP303B::measurePressureOnce(double &result)
 {
 	return measurePressureOnce(result, m_prsOsr);
 }
@@ -307,7 +307,7 @@ int16_t LOLIN_HP303B::measurePressureOnce(int32_t &result)
  * 						-2 if the object initialization failed
  * 						-1 on other fail
  */
-int16_t LOLIN_HP303B::measurePressureOnce(int32_t &result, uint8_t oversamplingRate)
+int16_t LOLIN_HP303B::measurePressureOnce(double &result, uint8_t oversamplingRate)
 {
 	//start the measurement
 	int16_t ret = startMeasurePressureOnce(oversamplingRate);
@@ -388,7 +388,7 @@ int16_t LOLIN_HP303B::startMeasurePressureOnce(uint8_t oversamplingRate)
  * 				-2 if the object initialization failed
  * 				-1 on other fail
  */
-int16_t LOLIN_HP303B::getSingleResult(int32_t &result)
+int16_t LOLIN_HP303B::getSingleResult(double &result)
 {
 	//abort if initialization failed
 	if(m_initFail)
@@ -660,7 +660,7 @@ int16_t LOLIN_HP303B::getContResults(int32_t *tempBuffer,
 	//while FIFO is not empty
 	while(readByteBitfield(HP303B__REG_INFO_FIFO_EMPTY) == 0)
 	{
-		int32_t result;
+		double result;
 		//read next result from FIFO
 		int16_t type = getFIFOvalue(&result);
 		switch(type)
@@ -824,7 +824,7 @@ int16_t LOLIN_HP303B::correctTemp(void)
 	//perform a first temperature measurement (again)
 	//the most recent temperature will be saved internally
 	//and used for compensation when calculating pressure
-	int32_t trash;
+	double trash;
 	measureTempOnce(trash);
 	
 	return HP303B__SUCCEEDED;
@@ -892,7 +892,7 @@ void LOLIN_HP303B::init(void)
 	//perform a first temperature measurement
 	//the most recent temperature will be saved internally
 	//and used for compensation when calculating pressure
-	int32_t trash;
+	double trash;
 	measureTempOnce(trash);
 
 	//make sure the HP303B is in standby after initialization
@@ -1192,7 +1192,7 @@ uint16_t LOLIN_HP303B::calcBusyTime(uint16_t mr, uint16_t osr)
  * returns:	0 on success
  * 			-1 on fail;
  */
-int16_t LOLIN_HP303B::getTemp(int32_t *result)
+int16_t LOLIN_HP303B::getTemp(double *result)
 {
 	uint8_t buffer[3] = {0};
 	//read raw pressure data to buffer
@@ -1229,7 +1229,7 @@ int16_t LOLIN_HP303B::getTemp(int32_t *result)
  * returns: 0 on success
  * 			-1 on fail;
  */
-int16_t LOLIN_HP303B::getPressure(int32_t *result)
+int16_t LOLIN_HP303B::getPressure(double *result)
 {
 	uint8_t buffer[3] = {0};
 	//read raw pressure data to buffer
@@ -1305,7 +1305,7 @@ int16_t LOLIN_HP303B::getFIFOvalue(int32_t* value)
  * raw: 	raw temperature value read from HP303B
  * returns: temperature value in °C
  */
-int32_t LOLIN_HP303B::calcTemp(int32_t raw)
+double LOLIN_HP303B::calcTemp(int32_t raw)
 {
 	double temp = raw;
 	
@@ -1320,7 +1320,7 @@ int32_t LOLIN_HP303B::calcTemp(int32_t raw)
 	temp = m_c0Half + m_c1 * temp;
 
 	//return temperature
-	return (int32_t)temp;
+	return temp;
 }
 
 /**
@@ -1328,7 +1328,7 @@ int32_t LOLIN_HP303B::calcTemp(int32_t raw)
  * raw: 	raw pressure value read from HP303B
  * returns: pressure value in Pa
  */
-int32_t LOLIN_HP303B::calcPressure(int32_t raw)
+double LOLIN_HP303B::calcPressure(int32_t raw)
 {
 	double prs = raw;
 
@@ -1341,7 +1341,7 @@ int32_t LOLIN_HP303B::calcPressure(int32_t raw)
 			+ m_lastTempScal * (m_c01 + prs * (m_c11 + prs * m_c21));
 
 	//return pressure
-	return (int32_t)prs;
+	return prs;
 }
 
 /**

@@ -34,15 +34,15 @@ public:
   int16_t standby(void);
 
   //Command Mode
-  int16_t measureTempOnce(int32_t &result);
-  int16_t measureTempOnce(int32_t &result, uint8_t oversamplingRate);
+  int16_t measureTempOnce(double &result);
+  int16_t measureTempOnce(double &result, uint8_t oversamplingRate);
   int16_t startMeasureTempOnce(void);
   int16_t startMeasureTempOnce(uint8_t oversamplingRate);
-  int16_t measurePressureOnce(int32_t &result);
-  int16_t measurePressureOnce(int32_t &result, uint8_t oversamplingRate);
+  int16_t measurePressureOnce(double &result);
+  int16_t measurePressureOnce(double &result, uint8_t oversamplingRate);
   int16_t startMeasurePressureOnce(void);
   int16_t startMeasurePressureOnce(uint8_t oversamplingRate);
-  int16_t getSingleResult(int32_t &result);
+  int16_t getSingleResult(double &result);
 
   //Background Mode
   int16_t startMeasureTempCont(uint8_t measureRate, uint8_t oversamplingRate);
@@ -122,11 +122,11 @@ private:
   int16_t configTemp(uint8_t temp_mr, uint8_t temp_osr);
   int16_t configPressure(uint8_t prs_mr, uint8_t prs_osr);
   uint16_t calcBusyTime(uint16_t temp_rate, uint16_t temp_osr);
-  int16_t getTemp(int32_t *result);
-  int16_t getPressure(int32_t *result);
+  int16_t getTemp(double *result);
+  int16_t getPressure(double *result);
   int16_t getFIFOvalue(int32_t *value);
-  int32_t calcTemp(int32_t raw);
-  int32_t calcPressure(int32_t raw);
+  double calcTemp(int32_t raw);
+  double calcPressure(int32_t raw);
 
   //bus specific
   int16_t readByte(uint8_t regAddress);
