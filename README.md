@@ -2,3 +2,4 @@
 ### Installation
 - Clone this repository  or download&unzip [zip file](https://github.com/wemos/LOLIN_HP303B_Library/archive/master.zip) into Arduino/libraries
 
+Added decimal support to Temperature and Pressure measures.
