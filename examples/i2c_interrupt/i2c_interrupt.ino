@@ -7,10 +7,10 @@ void onFifoFull();
 
 const unsigned char pressureLength = 50;
 unsigned char pressureCount = 0;
-int32_t pressure[pressureLength];
+double pressure[pressureLength];
 unsigned char temperatureCount = 0;
 const unsigned char temperatureLength = 50;
-int32_t temperature[temperatureLength];
+double temperature[temperatureLength];
 
 
 
