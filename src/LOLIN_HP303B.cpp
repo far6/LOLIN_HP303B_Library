@@ -660,7 +660,7 @@ int16_t LOLIN_HP303B::getContResults(int32_t *tempBuffer,
 	//while FIFO is not empty
 	while(readByteBitfield(HP303B__REG_INFO_FIFO_EMPTY) == 0)
 	{
-		double result;
+		uint32_t result;
 		//read next result from FIFO
 		int16_t type = getFIFOvalue(&result);
 		switch(type)
@@ -1266,7 +1266,7 @@ int16_t LOLIN_HP303B::getPressure(double *result)
  * 			0 if result is a temperature raw value
  * 			1 if result is a pressure raw value
  */
-int16_t LOLIN_HP303B::getFIFOvalue(int32_t* value)
+int16_t LOLIN_HP303B::getFIFOvalue(uint32_t* value)
 {
 	//abort on invalid argument
 	if(value == NULL)

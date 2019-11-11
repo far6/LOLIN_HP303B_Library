@@ -124,7 +124,7 @@ private:
   uint16_t calcBusyTime(uint16_t temp_rate, uint16_t temp_osr);
   int16_t getTemp(double *result);
   int16_t getPressure(double *result);
-  int16_t getFIFOvalue(int32_t *value);
+  int16_t getFIFOvalue(uint32_t *value);
   double calcTemp(int32_t raw);
   double calcPressure(int32_t raw);
 
